@@ -6,6 +6,7 @@ AI-powered brain tumor segmentation using SwinUNETR deep learning architecture. 
 ![PyTorch](https://img.shields.io/badge/PyTorch-2.1.0-red.svg)
 ![Flask](https://img.shields.io/badge/Flask-3.0.0-green.svg)
 
+<img width="833" height="635" alt="{3B0D23BD-2C9E-4B75-A218-0AEE7DD4596C}" src="https://github.com/user-attachments/assets/dce16691-b4a0-492b-9e1a-72d7d83b2eea" />
 
 ## 🎯 Features
 
