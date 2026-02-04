@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brain Tumor Segmentation - AI-Powered MRI Analysis</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Background gradient -->
+    <div class="background-gradient"></div>
+    
+    <!-- Main container -->
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="20" cy="20" r="18" stroke="url(#gradient)" stroke-width="2"/>
+                        <path d="M20 8 L20 32 M8 20 L32 20" stroke="url(#gradient)" stroke-width="2" stroke-linecap="round"/>
+                        <defs>
+                            <linearGradient id="gradient" x1="0" y1="0" x2="40" y2="40">
+                                <stop offset="0%" stop-color="#667eea"/>
+                                <stop offset="100%" stop-color="#764ba2"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                    <h1>Brain Tumor Segmentation</h1>
+                </div>
+                <p class="subtitle">AI-Powered MRI Analysis using SwinUNETR</p>
+            </div>
+        </header>
+
+        <!-- Upload Section -->
+        <section class="upload-section">
+            <div class="card">
+                <h2 class="section-title">Upload MRI Scan</h2>
+                <p class="section-description">Upload a NIfTI file (.nii or .nii.gz) containing 4-channel MRI data (FLAIR, T1, T1ce, T2)</p>
+                
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-icon">
+                        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M7 18C4.23858 18 2 15.7614 2 13C2 10.2386 4.23858 8 7 8C7.33333 5.33333 9.66667 2 14 2C18.3333 2 20.6667 5.33333 21 8C23.7614 8 26 10.2386 26 13C26 15.7614 23.7614 18 21 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M12 12V22M12 12L9 15M12 12L15 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <h3 class="upload-title">Drag & Drop your file here</h3>
+                    <p class="upload-text">or</p>
+                    <label for="fileInput" class="upload-button">
+                        Browse Files
+                    </label>
+                    <input type="file" id="fileInput" accept=".nii,.nii.gz" hidden>
+                    <p class="upload-info">Supported formats: .nii, .nii.gz (Max 500MB)</p>
+                </div>
+
+                <div class="file-info" id="fileInfo" style="display: none;">
+                    <div class="file-details">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M13 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V9L13 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M13 2V9H20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <div class="file-name-container">
+                            <span class="file-name" id="fileName"></span>
+                            <span class="file-size" id="fileSize"></span>
+                        </div>
+                    </div>
+                    <button class="remove-file" id="removeFile">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <button class="analyze-button" id="analyzeButton" disabled>
+                    <span class="button-text">Analyze MRI Scan</span>
+                    <svg class="button-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+            </div>
+        </section>
+
+        <!-- Loading Section -->
+        <section class="loading-section" id="loadingSection" style="display: none;">
+            <div class="card">
+                <div class="loading-content">
+                    <div class="spinner"></div>
+                    <h3 class="loading-title">Analyzing MRI Scan...</h3>
+                    <p class="loading-text">Our AI model is processing your scan. This may take a few moments.</p>
+                    <div class="progress-bar">
+                        <div class="progress-fill"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Results Section -->
+        <section class="results-section" id="resultsSection" style="display: none;">
+            <div class="card">
+                <div class="results-header">
+                    <h2 class="section-title">Segmentation Results</h2>
+                    <button class="new-analysis-button" id="newAnalysisButton">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        New Analysis
+                    </button>
+                </div>
+
+                <div class="results-info">
+                    <div class="info-item">
+                        <span class="info-label">Slice Index:</span>
+                        <span class="info-value" id="sliceIndex">-</span>
+                    </div>
+                </div>
+
+                <!-- Input Images -->
+                <div class="results-category">
+                    <h3 class="category-title">Input MRI Modalities</h3>
+                    <div class="images-grid" id="inputImages"></div>
+                </div>
+
+                <!-- Prediction Images -->
+                <div class="results-category">
+                    <h3 class="category-title">Tumor Segmentation</h3>
+                    <div class="images-grid" id="predictionImages"></div>
+                </div>
+
+                <!-- Overlay Image -->
+                <div class="results-category">
+                    <h3 class="category-title">Segmentation Overlay</h3>
+                    <div class="overlay-container" id="overlayImage"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Error Section -->
+        <section class="error-section" id="errorSection" style="display: none;">
+            <div class="card error-card">
+                <div class="error-icon">
+                    <svg width="64" height="64" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                        <path d="M12 8V12M12 16H12.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </div>
+                <h3 class="error-title">Analysis Failed</h3>
+                <p class="error-message" id="errorMessage"></p>
+                <button class="retry-button" id="retryButton">Try Again</button>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Powered by SwinUNETR Deep Learning Architecture</p>
+            <p class="footer-note">For research and educational purposes only</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
