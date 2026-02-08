@@ -1,5 +1,7 @@
 # Brain Tumor Segmentation
 
+**Instant & Orange Digital Center Hackathon  – Awarded 4th Place, winter 2026**
+
 AI-powered brain tumor segmentation using SwinUNETR deep learning architecture. This project provides a complete web-based solution for analyzing MRI scans and identifying tumor regions.
 
 ![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)
@@ -195,3 +197,10 @@ The model was trained on the **BraTS (Brain Tumor Segmentation) dataset**, which
 - Check file format (.nii or .nii.gz)
 - Verify file size < 500MB
 - Ensure file contains 4 channels
+
+# team members
+- [Mazen Mohammed](https://github.com/ELDA7EE7)
+- [Mohammed Hussien](https://github.com/Mhmd7syn)
+- [Youssef Ahmed](https://github.com/YoussefAhmed488)
+- [Youssef Elshekh](https://github.com/youssefelsheikh506)
+- [Mazen Alaa](https://github.com/mazen200)
