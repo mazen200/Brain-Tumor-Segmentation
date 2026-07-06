@@ -44,8 +44,8 @@ AI-powered brain tumor segmentation using SwinUNETR deep learning architecture. 
    ```
 3. **Download the pre-trained model**
 
-   Download out trained model (the link will be provided here soon)
-   place it in the `Models/` directory as `best_model-13.pth`.
+   Download our trained model (the link will be provided here soon)
+   and place it in the `Models/` directory as `best_model-13.pth`.
 
 
 4. **Start the Flask server**
